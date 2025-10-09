@@ -21,5 +21,13 @@ C:\> scoop install git
 
 ### 使用包管理器安装git只需一条命令，且升级非常方便： 升级命令为 ***scoop update git***
 
-## p're'i'z
+## 配置Git
+安装好Git后，还需要最后一步设置，在命令行输入：
+```cmd
+$ git config --global user.name "Your Name"
+$ git config --global user.email "email@example.com"
+```
+#### 因为Git是分布式控制系统，所以，每个机器都必须自报家门即你的名字和Email地址
+
+***注意 git configd的命令的--global参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址***
 
