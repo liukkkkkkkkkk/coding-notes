@@ -53,3 +53,26 @@ Initialized empty Git repository in /Users/michael/learngit/.git/
 
 ***如果没有看到.git目录，因为他是隐藏的，用ls -ah命令就可以看见***
 
+4.把文件添加到版本库
+第一步，用命令 git add 告诉Git,把文件提交到仓库
+```cmd
+ $ git add xxx.txt
+```
+第二步，用命令 git commit 告诉git,把文件提交到仓库
+```cmd
+$ git commit -m "wrote a readme file"
+[master (root-commit) eaadf4e] wrote a readme file
+ 1 file changed, 2 insertions(+)
+ create mode 100644 readme.txt
+```
+***简单解释一下git commit 命令，-m后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录，尽量输入说明***
+
+**成功之后1 file changed：1个文件被改动（我们新添加的xx.txt文件）；x insertions：插入了x行内容（xx.txt有x行内容）。**
+
+***commit可以一次提交多个插件，所以可以多次add不同的文件***
+```cmd
+$ git add file1.txt
+$ git add file2.txt file3.txt
+$ git commit -m "add 3 files."
+
+```
