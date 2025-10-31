@@ -3,8 +3,8 @@
 ## 基础语法：
 ```c#
 public bool StartsWith(string value)
-public bool StartsWith(string value, StringComparison comparisonType)
-public bool StartsWith(string value, bool ignoreCase, CultureInfo culture)
+public bool StartsWith(string value, StringComparison(字符串比较) comparisonType（比较类型）)
+public bool StartsWith(string value, bool ignoreCase（忽略大小写）, CultureInfo culture（文化信息）)
 ```
 ## 常见用法实例
 ```c#
