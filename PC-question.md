@@ -1,3 +1,5 @@
+# 1.任务管理器相关解释
+
 ***I.***[任务管理器] <img width="2000" height="900" alt="image" src="https://github.com/user-attachments/assets/85fac575-a9a7-44f7-9f1b-7aab9377b339" />
 
 
@@ -32,3 +34,6 @@
 - 内存：偏高 ⚠️（建议优化）
 - 磁盘：正常 ✅
 - 网络：空闲 ✅
+
+# 2.电脑中有两个Windows系统，要删除一个，解决方法
+<img width="712" height="2531" alt="image" src="https://github.com/user-attachments/assets/535ce553-7486-42bd-8cd0-09c910e24fd6" />
