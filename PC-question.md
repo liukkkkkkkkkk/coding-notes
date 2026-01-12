@@ -37,3 +37,11 @@
 
 # 2.电脑中有两个Windows系统，要删除一个，解决方法
 <img width="712" height="2531" alt="image" src="https://github.com/user-attachments/assets/535ce553-7486-42bd-8cd0-09c910e24fd6" />
+
+# 3.修复损坏U盘
+## 3.1 win+r 输入 cmd,然后输入 chkdsk u盘的名字: /f /r
+
+# 4.将u盘格式改为fat32
+## 4.1 下载DiskGenius，网址为 url=https://www.diskgenius.cn/
+## 4.2 在此页面上 
+<img width="605" height="712" alt="image" src="https://github.com/user-attachments/assets/7c91c598-3079-41af-9caf-644222c4ba54" />
