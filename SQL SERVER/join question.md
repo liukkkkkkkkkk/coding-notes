@@ -42,7 +42,20 @@ LEFT JOIN
 ON 
     左表.关联列 = 右表.关联列;  -- 连接条件
 ```
+## 4.交叉连接 cross join
+CROSS JOIN 是 SQL 中的一种表连接方式，它会产生两个或多个表的笛卡尔积（Cartesian Product）。
+### 核心特点：
+1.无条件匹配：与 INNER JOIN、LEFT JOIN 等需要使用 ON 子句指定连接条件不同，CROSS JOIN 不依赖任何连接条件。
 
+2.笛卡尔积结果：结果集中，第一个表中的每一行都会与第二个表中的每一行进行组合。如果表 A 有 N 行，表 B 有 M 行，那么 CROSS JOIN 的结果将包含 N * M 行。
+
+3.数据量爆炸风险：由于其特性，CROSS JOIN 非常容易产生巨大的结果集，使用时需谨慎
+```sql
+SELECT 列名列表
+FROM table_name_1
+CROSS JOIN table_name_2;
+-- 注意：SQL 标准中 CROSS JOIN 后面没有 ON 子句
+```
 # **SQL执行顺序**
 ## 执行顺序与书写顺序的对比
 ### 书写顺序
