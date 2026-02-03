@@ -45,3 +45,10 @@
 ## 4.1 下载DiskGenius，网址为 url=https://www.diskgenius.cn/
 ## 4.2 在此页面上 
 <img width="605" height="712" alt="image" src="https://github.com/user-attachments/assets/7c91c598-3079-41af-9caf-644222c4ba54" />
+
+# 4.用命令行重命名文件（绕过资源管理器缓存）
+以管理员身份打开命令提示符（cmd）或者powershell
+执行
+```cmd
+ren "C:\完整路径\原文件名.txt" "新文件名.txt"
+```
