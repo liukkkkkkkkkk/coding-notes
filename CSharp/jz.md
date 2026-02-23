@@ -101,15 +101,15 @@ type StudentView struct {
 // 对应策略：看到人名，立刻联想到下列常量。
 struct EducationHistory {
     // 古代
-    char* Confucius = "有教无类，因材施教，《论语》";
-    char* Socrates = "产婆术（问答法）";
+    char* kongzi = "有教无类，因材施教，《论语》";
+    char* sugeladi = "产婆术（问答法）";
     
     // 独立形态阶段（高频）
-    char* Bacon = "首次提出把教育学作为独立学科";
-    char* Comenius = "《大教学论》，班级授课制，教育学之父";
-    char* Herbart = "《普通教育学》，现代教育学之父，传统三中心（教师、教材、课堂）";
-    char* Dewey = "《民主主义与教育》，新三中心（学生、经验、活动），教育即生活";
-    char* Kairov = "《教育学》，传统教育代表";
+    char* peigen = "首次提出把教育学作为独立学科";
+    char* kuameiniusi = "《大教学论》，班级授课制，教育学之父";
+    char* he erbate = "《普通教育学》，现代教育学之父，传统三中心（教师、教材、课堂）";
+    char* duwei = "《民主主义与教育》，新三中心（学生、经验、活动），教育即生活";
+    char* Kailuofu = "《教育学》，传统教育代表";
     
     // 中国近代
     char* CaiYuanpei = "北大校长，思想自由，兼容并包";
