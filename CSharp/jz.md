@@ -1037,8 +1037,11 @@ namespace Kingdee.BOS.Modules.TeacherDevelopment
     #endregion
 }
 ```
-<![02ac7b59018592e8d0c6d9d17e4323af](https://github.com/user-attachments/assets/c7a3c4e4-0086-42a6-9ce1-8dfddfd6d389) width="300" height="200">
-![3b18d51a72890c84a2c175573506b31e](https://github.com/user-attachments/assets/68392c69-b225-4f47-8cac-1084ca19a1f4)
+![02ac7b59018592e8d0c6d9d17e4323af](https://github.com/user-attachments/assets/fa078f9b-4841-49ce-9943-093280703594)
+
+![d6594fafcd38f0bff2af7344f621bd0e](https://github.com/user-attachments/assets/266e2782-a882-4487-a70b-752f3d71838e)
+
+
 
 
 
