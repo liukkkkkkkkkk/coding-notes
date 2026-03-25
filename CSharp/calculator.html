@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>卡路里计算器</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 { text-align: center; color: #333; margin-bottom: 20px; font-size: 22px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; color: #666; margin-bottom: 5px; font-size: 14px; }
+        
+        /* 输入框样式优化 */
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 16px;
+            background: #fafafa;
+        }
+        input:focus, select:focus { border-color: #667eea; background: white; outline: none; }
+        
+        .radio-group { display: flex; gap: 10px; }
+        .radio-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+        .radio-btn.active {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* 按钮样式优化 - 增加点击区域 */
+        .btn-calculate {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn-calculate:active { transform: scale(0.98); opacity: 0.9; }
+        
+        .result {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .result-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .result-label { color: #888; font-size: 12px; }
+        .result-value { font-size: 24px; font-weight: 700; color: #333; }
+        .result-highlight { color: #667eea; }
+        
+        .macros-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .macro-card {
+            background: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        .macro-value { font-size: 18px; font-weight: bold; color: #333; }
+        .macro-name { font-size: 12px; color: #888; margin-top: 3px; }
+        
+        .suggestion {
+            margin-top: 15px;
+            padding: 12px;
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #2e7d32;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏋️ 卡路里计算器</h1>
+        
+        <div class="form-group">
+            <label>性别</label>
+            <div class="radio-group">
+                <div class="radio-btn active" id="gender-male" onclick="selectGender('男')">👨 男</div>
+                <div class="radio-btn" id="gender-female" onclick="selectGender('女')">👩 女</div>
+            </div>
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+            <div class="form-group" style="flex: 1;">
+                <label>身高</label>
+                <input type="number" id="height" placeholder="170">
+            </div>
+            <div class="form-group" style="flex: 1;">
+                <label>体重</label>
+                <input type="number" id="weight" placeholder="65">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>年龄</label>
+            <input type="number" id="age" placeholder="25">
+        </div>
+        
+        <div class="form-group">
+            <label>活动水平</label>
+            <select id="activity">
+                <option value="1.2">久坐 (几乎不运动)</option>
+                <option value="1.375">轻度活动 (每周1-3次)</option>
+                <option value="1.55" selected>中度活动 (每周3-5次)</option>
+                <option value="1.725">高度活动 (每周6-7次)</option>
+                <option value="1.9">体力劳动/运动员</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>目标</label>
+            <div class="radio-group">
+                <div class="radio-btn" id="goal-muscle" onclick="selectGoal('增肌')">💪 增肌</div>
+                <div class="radio-btn active" id="goal-fat" onclick="selectGoal('减脂')">🔥 减脂</div>
+            </div>
+        </div>
+        
+        <button class="btn-calculate" onclick="calculate()">开始计算</button>
+        
+        <div class="result" id="result">
+            <div class="result-box">
+                <div class="result-label">基础代谢 (BMR)</div>
+                <div class="result-value" id="bmr">-- 千卡</div>
+            </div>
+            
+            <div class="result-box">
+                <div class="result-label">每日总消耗 (TDEE)</div>
+                <div class="result-value" id="tdee">-- 千卡</div>
+            </div>
+            
+            <div class="result-box" style="background: #667eea; color: white;">
+                <div class="result-label" style="color: rgba(255,255,255,0.8);">🎯 每日建议摄入</div>
+                <div class="result-value" id="target" style="color: white;">-- 千卡</div>
+                <div style="font-size: 12px; opacity: 0.8;" id="range">范围: -- ~ -- 千卡</div>
+            </div>
+            
+            <div class="macros-grid">
+                <div class="macro-card">
+                    <div class="macro-value" id="protein">--g</div>
+                    <div class="macro-name">蛋白质</div>
+                </div>
+                <div class="macro-card">
+                    <div class="macro-value" id="carbs">--g</div>
+                    <div class="macro-name">碳水</div>
+                </div>
+                <div class="macro-card">
+                    <div class="macro-value" id="fat">--g</div>
+                    <div class="macro-name">脂肪</div>
+                </div>
+            </div>
+            
+            <div class="suggestion" id="suggestion"></div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化变量
+        let currentGender = '男';
+        let currentGoal = '减脂';
+        
+        // 切换性别
+        function selectGender(gender) {
+            currentGender = gender;
+            document.getElementById('gender-male').className = gender === '男' ? 'radio-btn active' : 'radio-btn';
+            document.getElementById('gender-female').className = gender === '女' ? 'radio-btn active' : 'radio-btn';
+        }
+        
+        // 切换目标
+        function selectGoal(goal) {
+            currentGoal = goal;
+            document.getElementById('goal-muscle').className = goal === '增肌' ? 'radio-btn active' : 'radio-btn';
+            document.getElementById('goal-fat').className = goal === '减脂' ? 'radio-btn active' : 'radio-btn';
+        }
+        
+        // 主计算函数
+        function calculate() {
+            try {
+                // 获取输入值
+                const heightInput = document.getElementById('height').value;
+                const weightInput = document.getElementById('weight').value;
+                const ageInput = document.getElementById('age').value;
+                const activityInput = document.getElementById('activity').value;
+                
+                // 验证输入
+                if (!heightInput || !weightInput || !ageInput) {
+                    alert('⚠️ 请先填写完整信息！\n\n身高、体重、年龄为必填项。');
+                    return;
+                }
+                
+                const height = parseFloat(heightInput);
+                const weight = parseFloat(weightInput);
+                const age = parseFloat(ageInput);
+                const activity = parseFloat(activityInput);
+                
+                // 简单的范围验证
+                if (height < 100 || height > 250) {
+                    alert('身高似乎不太对哦，请输入100-250之间的数字');
+                    return;
+                }
+                if (weight < 30 || weight > 300) {
+                    alert('体重似乎不太对哦，请输入30-300之间的数字');
+                    return;
+                }
+                if (age < 10 || age > 100) {
+                    alert('年龄似乎不太对哦，请输入10-100之间的数字');
+                    return;
+                }
+                
+                // 计算BMR
+                let bmr;
+                if (currentGender === '男') {
+                    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+                } else {
+                    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+                }
+                
+                // 计算TDEE
+                const tdee = bmr * activity;
+                
+                // 计算目标卡路里
+                let target, min, max;
+                if (currentGoal === '减脂') {
+                    target = tdee - 400;
+                    min = tdee - 500;
+                    max = tdee - 300;
+                } else {
+                    target = tdee + 400;
+                    min = tdee + 200;
+                    max = tdee + 500;
+                }
+                
+                // 计算营养素
+                let protein, carbs, fat;
+                if (currentGoal === '减脂') {
+                    protein = target * 0.30 / 4;
+                    carbs = target * 0.40 / 4;
+                    fat = target * 0.30 / 9;
+                } else {
+                    protein = target * 0.25 / 4;
+                    carbs = target * 0.50 / 4;
+                    fat = target * 0.25 / 9;
+                }
+                
+                // 显示结果
+                document.getElementById('bmr').textContent = Math.round(bmr) + ' 千卡';
+                document.getElementById('tdee').textContent = Math.round(tdee) + ' 千卡';
+                document.getElementById('target').textContent = Math.round(target) + ' 千卡';
+                document.getElementById('range').textContent = '建议范围: ' + Math.round(min) + ' ~ ' + Math.round(max) + ' 千卡';
+                
+                document.getElementById('protein').textContent = Math.round(protein) + 'g';
+                document.getElementById('carbs').textContent = Math.round(carbs) + 'g';
+                document.getElementById('fat').textContent = Math.round(fat) + 'g';
+                
+                // 建议文案
+                let suggestionText = '';
+                if (currentGoal === '减脂') {
+                    suggestionText = '✅ 减脂建议：保持每日' + Math.round(tdee - target) + '卡的热量缺口，预计每周减重0.3-0.5kg。多吃高蛋白食物有助于保持肌肉。';
+                } else {
+                    suggestionText = '✅ 增肌建议：保持每日' + Math.round(target - tdee) + '卡的热量盈余，配合力量训练效果更佳。训练前后补充碳水和蛋白质。';
+                }
+                document.getElementById('suggestion').textContent = suggestionText;
+                
+                // 显示结果区域
+                document.getElementById('result').style.display = 'block';
+                
+                // 滚动到结果
+                setTimeout(() => {
+                    document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+                
+            } catch (error) {
+                alert('计算出错啦：' + error.message + '\n请检查输入内容是否正确');
+            }
+        }
+    </script>
+</body>
+</html>
