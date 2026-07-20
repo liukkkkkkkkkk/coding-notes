@@ -52,3 +52,22 @@
 ```cmd
 ren "C:\完整路径\原文件名.txt" "新文件名.txt"
 ```
+# 5.访问共享文件夹时提示出现了扩展错误
+<img width="451" height="181" alt="image" src="https://github.com/user-attachments/assets/67aa0c21-4ad7-4e1f-b016-a1efd4bafb14" />
+## 解决办法： 
+
+# 一般在win11家庭中文版会出现这个问题（红米笔记本）
+
+## 5.1首先是没有组策略，所以必须先安装组策略
+
+## 5.2 然后在打开组策略进行配置
+
+## 5.3组策略安装方法
+### 1.先在桌面上新建一个txt文本文档，然后在里面加入
+```p
+@echo offpushd "%~dp0"dir /b C:\Windows\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientExtensions-Package~3*.mum >List.txtdir /b C:\Windows\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientTools-Package~3*.mum >>List.txtfor /f %%i in ('findstr /i . List.txt 2^>nul') do dism /online /norestart /add-package:"C:\Windows\servicing\Packages\%%i"pause
+```
+### 2.保存后将 .txt 改为 .cmd 并右键管理员身份运行，系统会自动安装组策略，安装完毕后重启生效。
+### 3.接下来打开组策略，按照图示操作即可
+<img width="879" height="874" alt="image" src="https://github.com/user-attachments/assets/e9f1e541-f80a-4a28-9b78-7780921d02d2" />
+
