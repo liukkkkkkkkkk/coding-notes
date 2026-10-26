@@ -21,3 +21,13 @@ long materialId = Convert.ToInt64(material["Id"]);
 ```c#
 decimal price = 19.99m;
 ```
+# 平时写代码，只要不是存数据库主键 ID，闭眼用 int (int32) 就行了；一旦涉及到数据库里的 FID 或者 Id 字段，无脑用 long (int64)，保准不出错。
+# 安全万能写法
+```c#
+// 取长整型/整型，无论底层是 int 还是 long，都不会报错
+long id = Convert.ToInt64(material["Id"]); 
+
+// 取字符串，即使为 null 也能安全转为 ""
+string name = Convert.ToString(material["Name"]); 
+```
+
